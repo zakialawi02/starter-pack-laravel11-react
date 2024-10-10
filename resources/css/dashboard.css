@@ -1,0 +1,35 @@
+/* DROPDOWN */
+.dropdown {
+    @apply relative;
+}
+
+.dropdown-menu {
+    @apply absolute right-0 mt-2 origin-top-right bg-backend-base-100 w-80;
+}
+
+/* NOTIFICATION */
+.notification-tab > .active {
+    @apply text-backend-primary border-b-backend-primary hover:text-backend-primary;
+}
+.order-tab > .active {
+    @apply text-white bg-backend-primary hover:text-white;
+}
+.main.active {
+    @apply md:w-full md:ml-0;
+}
+
+/* SIDEBAR */
+#sidebar-menu-container::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 50px;
+}
+
+#sidebar-menu-container::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 50px;
+}
+
+#sidebar-menu-container::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+    border-radius: 50px;
+}

@@ -1,55 +1,69 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from "@inertiajs/react";
+import ButtonBE from "@/Components/Element/Button/ButtonBE";
 
-export default function ConfirmPassword() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        password: '',
-    });
+const ConfirmPassword = ({ status }) => {
+    const { post, processing } = useForm({});
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('password.confirm'), {
-            onFinish: () => reset('password'),
-        });
+        post(route("verification.send"));
+    };
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        // alert("logout");
+        post(route("logout"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Confirm Password" />
+        <>
+            <Head title="Secure Page" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your
-                password before continuing.
+            <div className="relative flex items-center justify-center min-h-screen bg-gray-400 ">
+                <div className="p-4 rounded-md bg-backend-light min-w-80 mx-10 max-w-[30rem] text-backend-dark">
+                    {" "}
+                    <div className="mb-3">
+                        <p className="p-2 bg-opacity-50 rounded-sm text-backend-dark">
+                            Thanks for signing up! Before getting started, could
+                            you verify your email address by clicking on the
+                            link we just emailed to you? If you didn't receive
+                            the email, we will gladly send you another.
+                        </p>
+
+                        {status === "verification-link-sent" && (
+                            <div className="mb-4 text-sm font-medium text-green-600">
+                                A new verification link has been sent to the
+                                email address you provided during registration.
+                            </div>
+                        )}
+
+                        <div className="flex items-center justify-between mt-4">
+                            <form onSubmit={handleSubmit}>
+                                <ButtonBE
+                                    className="px-6 py-3"
+                                    color={"bg-backend-primary"}
+                                    disabled={processing}
+                                >
+                                    Resend Email Verification
+                                </ButtonBE>
+                            </form>
+
+                            <form onSubmit={handleLogout}>
+                                <ButtonBE
+                                    className="px-6 py-3"
+                                    color={"bg-backend-error"}
+                                    disabled={processing}
+                                >
+                                    Log Out
+                                </ButtonBE>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+        </>
     );
-}
+};
+
+export default ConfirmPassword;

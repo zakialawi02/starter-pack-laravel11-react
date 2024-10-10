@@ -1,100 +1,125 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import AuthLayout from "@/Layouts/AuthLayout";
+import ApplicationLogo from "@/Components/Element/ApplicationLogo/ApplicationLogo";
+import InputError from "@/Components/Element/Input/InputError";
+import TextInputGroup from "@/Components/Element/Input/TextInputGroup";
+import ButtonBE from "@/Components/Element/Button/ButtonBE";
+import Checkbox from "@/Components/Element/Checkbox/Checkbox";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
 
-export default function Login({ status, canResetPassword }) {
+const Login = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        id_user: "",
+        password: "",
         remember: false,
     });
 
-    const submit = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        return () => {
+            reset("password");
+        };
+    }, []);
 
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // alert("login");
+        post(route("login"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <>
+            <Head title="Login" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+            <AuthLayout>
+                <div className="mb-3 text-center">
+                    <ApplicationLogo></ApplicationLogo>
+                    <h3 className="text-xl">Welcome back !</h3>
+                    <p className="text-backend-muted">
+                        Sign in to your account
+                    </p>
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                <div className="mb-3">
+                    <form onSubmit={handleSubmit}>
+                        <TextInputGroup
+                            id="id_user"
+                            name="id_user"
+                            icon="fa-regular fa-user"
+                            label="Email/Username"
+                            type="text"
+                            value={data.id_user}
+                            placeholder="Email/Username"
+                            onChange={(e) => setData("id_user", e.target.value)}
+                            autoComplete="username"
+                            isFocused="true"
+                        />
+                        <InputError message={errors.id_user} className="mb-2" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
+                        <TextInputGroup
+                            id="password"
+                            name="password"
+                            icon="fa-solid fa-lock"
+                            label="Password"
+                            type="password"
+                            value={data.password}
+                            placeholder="Password"
                             onChange={(e) =>
-                                setData('remember', e.target.checked)
+                                setData("password", e.target.value)
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
+                        <InputError
+                            message={errors.password}
+                            className="mb-2"
+                        />
 
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                        <label className="flex items-center">
+                            <Checkbox
+                                name="remember"
+                                checked={data.remember}
+                                onChange={(e) =>
+                                    setData("remember", e.target.checked)
+                                }
+                            />
+                            <span className="text-sm text-gray-600 ms-2">
+                                Remember me
+                            </span>
+                        </label>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                        <div className="text-center">
+                            <ButtonBE
+                                className="px-6 py-3 mt-4"
+                                color={"bg-backend-primary"}
+                                disabled={processing}
+                            >
+                                Login
+                            </ButtonBE>
+                        </div>
+                    </form>
+
+                    <div className="p-1 mt-4 text-center">
+                        <div className="ml-1 text-backend-muted hover:underline">
+                            <Link
+                                preserveState
+                                href={route("password.request")}
+                            >
+                                Forgot your password?
+                            </Link>
+                        </div>
+                        <div className="mt-2">
+                            Don't have an account?
+                            <Link
+                                preserveState
+                                href={route("register")}
+                                className="ml-1 text-backend-primary hover:text-backend-secondary"
+                            >
+                                Register
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-            </form>
-        </GuestLayout>
+            </AuthLayout>
+        </>
     );
-}
+};
+
+export default Login;
