@@ -1,6 +1,6 @@
 # Starterpack Laravel 11 + React
 
-Welcome to the **Starterpack Laravel + React** project! This starter pack provides a robust foundation for building applications with custom authentication using Breeze, along with essential features like user management, profile editing, and a dashboard interface. It leverages the latest technologies, including Laravel 10, Inertia.js, React.js, and TailwindCSS.
+Welcome to the **Starterpack Laravel + React** project! This starter pack provides a robust foundation for building applications with custom authentication using Breeze, along with essential features like user management, profile editing, and a dashboard interface. It leverages the latest technologies, including Laravel 11, Inertia.js, React.js, and TailwindCSS.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Welcome to the **Starterpack Laravel + React** project! This starter pack provid
 
 ## Technologies Used
 
--   **Laravel 10**: A powerful PHP framework for web application development.
+-   **Laravel 11**: A powerful PHP framework for web application development.
 -   **Inertia.js**: A framework that allows you to build modern single-page applications using classic server-side routing and controllers.
 -   **React.js**: A popular JavaScript library for building user interfaces.
 -   **TailwindCSS**: A utility-first CSS framework for creating custom designs without leaving your HTML.
