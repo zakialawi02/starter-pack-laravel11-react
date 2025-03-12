@@ -1,6 +1,8 @@
 import Card from "@/Components/Element/Card/Card";
+import SmartLink from "@/Components/Element/Modal/SmartLink";
 import SkeletonCard from "@/Components/Element/Skeleton/SkeletonCard";
 import DashboardLayout from "@/Layouts/DashboardLayout";
+import { Link } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -163,6 +165,17 @@ const Dashboard = ({ auth }) => {
                             access control.
                         </p>
                     </div>
+
+                    <Link href="/dashboards">Goto Link</Link>
+                    <SmartLink href="/dashboard/users">
+                        Goto SmartLink
+                    </SmartLink>
+                    <SmartLink
+                        href="https://www.linkedin.com/in/ahmad-zaki-alawi"
+                        target="_blank"
+                    >
+                        Goto SmartLink2
+                    </SmartLink>
 
                     <div className="w-full overflow-x-auto">
                         <table className="w-full text-left">
